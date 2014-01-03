@@ -35,6 +35,7 @@ feature
 			create navbar.make_with_brand ("navbar1", "EWF Crowd Sourcing")
 			navbar.add_list_element (create {WSF_BASIC_CONTROL}.make_with_body ("a", "href=%"/%"", "Home"))
 			navbar.add_list_element (create {WSF_BASIC_CONTROL}.make_with_body ("a", "href=%"/grid%"", "Project grid"))
+			navbar.add_list_element (create {WSF_BASIC_CONTROL}.make_with_body ("a", "href=%"/project/sample%"", "Sample Project"))
 			if not attached get_parameter ("ajax") then
 				control.add_control (navbar)
 			end
@@ -43,7 +44,9 @@ feature
 		end
 
 feature
+
 	main_control: WSF_LAYOUT_CONTROL
+
 	control: WSF_MULTI_CONTROL [WSF_STATELESS_CONTROL]
 
 feature --DB
