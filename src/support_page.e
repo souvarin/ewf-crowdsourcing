@@ -17,7 +17,7 @@ inherit
 create
 	make
 
-feature {NONE}
+feature {NONE} -- Initialization
 
 	initialize_controls
 		local
@@ -32,20 +32,19 @@ feature {NONE}
 			main_control.add_control (2, create {WSF_BASIC_CONTROL}.make_with_body ("h1", "", "Support project"))
 			load_reward
 			create form.make
+			form.add_class ("form-horizontal")
 			create amount.make ("")
 			create amount_container.make ("Amount", amount)
 			if attached reward ["amount"] as a then
+				amount.append_attribute ("placeholder=%"min " + a.out + "$%"")
 				amount_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent validate_amount, "Minimal amount is " + a.out))
 			end
 			form.add_control (amount_container)
+			create button1.make ("OK")
+			button1.add_class ("btn-primary")
+			button1.set_click_event (agent handle_click)
 			main_control.add_control (2, form)
-		end
-
-	handle_click
-		do
-			form.validate
-			if form.is_valid then
-			end
+			main_control.add_control (2, button1)
 		end
 
 feature -- Validation
@@ -56,7 +55,10 @@ feature -- Validation
 				if attached reward ["amount"] as a_amount and then attached {INTEGER} a_amount as a and then amount.to_integer >= a then
 					Result := True
 				else
+					Result := False
 				end
+				else
+					Result :=False
 			end
 		end
 
@@ -81,6 +83,27 @@ feature -- Implementation
 
 	process
 		do
+		end
+
+feature --Events
+
+	handle_click
+		local
+			funding: SQL_ENTITY
+			city_id: INTEGER
+			timestamp: DATE_TIME
+		do
+			form.validate
+			if form.is_valid and attached current_user as user then
+				create funding.make
+				create timestamp.make_now
+				funding ["user_id"] := user ["id"]
+				funding ["project_id"] := reward ["project_id"]
+				funding ["amount"] := amount_container.value
+				funding ["timestamp"] := timestamp.formatted_out ("[0]dd-[0]mm-yyyy")
+				funding ["reward_id"] := reward ["id"]
+				funding.save (database, "fundings")
+			end
 		end
 
 feature -- Properties
