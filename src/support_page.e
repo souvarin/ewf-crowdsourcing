@@ -51,14 +51,11 @@ feature -- Validation
 
 	validate_amount (amount: STRING): BOOLEAN
 		do
-			if amount.is_integer then
-				if attached reward ["amount"] as a_amount and then attached {INTEGER} a_amount as a and then amount.to_integer >= a then
+			Result := False
+			if amount.is_double then
+				if attached {DOUBLE} reward ["amount"] as a_amount and then amount.to_double >= a_amount then
 					Result := True
-				else
-					Result := False
 				end
-				else
-					Result :=False
 			end
 		end
 
@@ -71,7 +68,7 @@ feature -- Implementation
 		do
 			if attached request.path_parameter ("reward_id") as id then
 				create query.make ("rewards")
-				query.set_fields (<<["id"], ["amount"]>>)
+				query.set_fields (<<["id"], ["amount"], ["project_id"]>>)
 				create condition.make_condition ("AND")
 				condition ["id"].equals (id.string_representation)
 				query.set_where (condition)
@@ -99,10 +96,13 @@ feature --Events
 				create timestamp.make_now
 				funding ["user_id"] := user ["id"]
 				funding ["project_id"] := reward ["project_id"]
-				funding ["amount"] := amount_container.value
+				funding ["amount"] := amount_container.value.to_double
 				funding ["timestamp"] := timestamp.formatted_out ("[0]dd-[0]mm-yyyy")
 				funding ["reward_id"] := reward ["id"]
 				funding.save (database, "fundings")
+				if attached reward ["project_id"] as project_id then
+					redirect ("/project/" + project_id.out)
+				end
 			end
 		end
 
