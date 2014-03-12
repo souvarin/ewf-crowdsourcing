@@ -16,7 +16,7 @@ create
 
 feature
 
-	create_control_from_tag (tag: STRING): detachable REWARD_INPUT
+	create_control_from_tag (tag: STRING_32): detachable REWARD_INPUT
 		do
 			if tag.same_string ("reward") then
 				create Result.make (Current)

@@ -16,7 +16,7 @@ create
 
 feature
 
-	create_control_from_tag (tag: STRING): detachable GOAL_INPUT
+	create_control_from_tag (tag: STRING_32): detachable GOAL_INPUT
 		do
 			if tag.same_string ("goal") then
 				create Result.make (Current)

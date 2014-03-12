@@ -37,7 +37,7 @@ feature {NONE} -- Initialization
 			create amount_container.make ("Amount", amount)
 			if attached reward ["amount"] as a then
 				amount.append_attribute ("placeholder=%"min " + a.out + "$%"")
-				amount_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent validate_amount, "Minimal amount is " + a.out))
+				amount_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent validate_amount, "Minimal amount is " + a.out))
 			end
 			form.add_control (amount_container)
 			create button1.make ("OK")
@@ -49,7 +49,7 @@ feature {NONE} -- Initialization
 
 feature -- Validation
 
-	validate_amount (amount: STRING): BOOLEAN
+	validate_amount (amount: STRING_32): BOOLEAN
 		do
 			Result := False
 			if amount.is_double then
@@ -110,7 +110,7 @@ feature -- Properties
 
 	reward: SQL_ENTITY
 
-	amount_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	amount_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
 	form: WSF_FORM_CONTROL
 

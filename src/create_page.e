@@ -46,7 +46,7 @@ feature {NONE} -- Initialization
 			form.add_control (create {WSF_BASIC_CONTROL}.make_with_body ("h1", "", "Create Project"))
 			create name.make ("")
 			create name_container.make ("Project name", name)
-			name_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent check_name, "Enter a valid projectname (between 3 and 50 characters)"))
+			name_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent check_name, "Enter a valid projectname (between 3 and 50 characters)"))
 			form.add_control (name_container)
 			create from_date.make ("div")
 			create from_date_container.make_without_border ("From", from_date)
@@ -56,11 +56,11 @@ feature {NONE} -- Initialization
 			form.add_control (to_date_container)
 			create country.make (create {FLAG_AUTOCOMPLETION}.make)
 			create country_container.make ("Country", country)
-			country_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent check_country, "Enter a valid country!"))
+			country_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent check_country, "Enter a valid country!"))
 			form.add_control (country_container)
 			create city.make ("")
 			create city_container.make ("City", city)
-			city_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent check_city, "Enter a valid city!"))
+			city_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent check_city, "Enter a valid city!"))
 			form.add_control (city_container)
 			create funding_goal.make ("")
 			create funding_goal_container.make ("Funding goal", funding_goal)
@@ -68,15 +68,15 @@ feature {NONE} -- Initialization
 			form.add_control (funding_goal_container)
 			create category.make ("")
 			create category_container.make ("Category", category)
-			category_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent check_category, "Enter a valid category!"))
+			category_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent check_category, "Enter a valid category!"))
 			form.add_control (category_container)
 			create short_description.make ("")
 			create short_description_container.make ("Short description", short_description)
-			short_description_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent check_short_description, "Enter a valid short description!"))
+			short_description_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent check_short_description, "Enter a valid short description!"))
 			form.add_control (short_description_container)
 			create description.make ("")
 			create description_container.make ("Description", description)
-			description_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent check_description, "Enter a valid description!"))
+			description_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent check_description, "Enter a valid description!"))
 			form.add_control (description_container)
 			create thumbnail.make_with_image_preview
 			create thumbnail_container.make ("Thumbnail URL", thumbnail)
@@ -161,32 +161,32 @@ feature -- Events
 
 feature -- Validations
 
-	check_name (input: STRING): BOOLEAN
+	check_name (input: STRING_32): BOOLEAN
 		do
 			Result := input.count >= 3 and input.count <= 50
 		end
 
-	check_country (input: STRING): BOOLEAN
+	check_country (input: STRING_32): BOOLEAN
 		do
 			Result := True
 		end
 
-	check_city (input: STRING): BOOLEAN
+	check_city (input: STRING_32): BOOLEAN
 		do
 			Result := not input.is_empty
 		end
 
-	check_category (input: STRING): BOOLEAN
+	check_category (input: STRING_32): BOOLEAN
 		do
 			Result := not input.is_empty
 		end
 
-	check_short_description (input: STRING): BOOLEAN
+	check_short_description (input: STRING_32): BOOLEAN
 		do
 			Result := not input.is_empty
 		end
 
-	check_description (input: STRING): BOOLEAN
+	check_description (input: STRING_32): BOOLEAN
 		do
 			Result := not input.is_empty
 		end
@@ -201,25 +201,25 @@ feature -- Properties
 
 	form: WSF_FORM_CONTROL
 
-	name_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	name_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	from_date_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	from_date_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	to_date_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	to_date_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	country_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	country_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	city_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	city_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	category_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	category_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	funding_goal_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	funding_goal_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	short_description_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	short_description_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	description_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	description_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	thumbnail_container: WSF_FORM_ELEMENT_CONTROL [detachable WSF_FILE]
+	thumbnail_container: WSF_FORM_ELEMENT_CONTROL [detachable WSF_FILE_DEFINITION]
 
 	rewards: REWARD_INPUT_REPEATER
 

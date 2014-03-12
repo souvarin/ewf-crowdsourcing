@@ -21,7 +21,7 @@ feature {NONE}
 
 	initialize_controls
 		local
-			avatar_file: WSF_FILE
+			avatar_file: WSF_FILE_DEFINITION
 		do
 			Precursor
 			navbar.set_active (4)
@@ -33,9 +33,9 @@ feature {NONE}
 			create form.make_with_label_width (4)
 			form.add_class ("form-horizontal")
 			create name_container.make ("Username", create {WSF_INPUT_CONTROL}.make (""))
-			name_container.add_validator (create {WSF_MIN_VALIDATOR [STRING]}.make (3, "Username must contain at least 3 characters"))
-			name_container.add_validator (create {WSF_MAX_VALIDATOR [STRING]}.make (15, "Username can contain at most 15 characters"))
-			name_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent check_username, "Username already taken"))
+			name_container.add_validator (create {WSF_MIN_VALIDATOR [STRING_32]}.make (3, "Username must contain at least 3 characters"))
+			name_container.add_validator (create {WSF_MAX_VALIDATOR [STRING_32]}.make (15, "Username can contain at most 15 characters"))
+			name_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent check_username, "Username already taken"))
 			form.add_control (name_container)
 			create email_container.make ("Email", create {WSF_INPUT_CONTROL}.make (""))
 			email_container.add_validator (create {WSF_EMAIL_VALIDATOR}.make ("Invalid email address"))
@@ -88,9 +88,9 @@ feature {NONE}
 			end
 		end
 
-	upload_file (f: ITERABLE [WSF_UPLOADED_FILE]): detachable String
+	upload_file (f: ITERABLE [WSF_UPLOADED_FILE]): detachable STRING_32
 		local
-			file_location: STRING
+			file_location: STRING_32
 		do
 				-- Store file on server and return link
 			across
@@ -105,7 +105,7 @@ feature {NONE}
 			end
 		end
 
-	check_username (input: STRING): BOOLEAN
+	check_username (input: STRING_32): BOOLEAN
 		local
 			users_query: SQL_QUERY [SQL_ENTITY]
 			condition: SQL_CONDITIONS
@@ -131,11 +131,11 @@ feature -- Properties
 
 	form: WSF_FORM_CONTROL
 
-	name_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	name_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	email_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	email_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	avatar_container: WSF_FORM_ELEMENT_CONTROL [detachable WSF_FILE]
+	avatar_container: WSF_FORM_ELEMENT_CONTROL [detachable WSF_FILE_DEFINITION]
 
 	avatar_control: WSF_FILE_CONTROL
 

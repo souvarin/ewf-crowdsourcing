@@ -36,7 +36,7 @@ feature {NONE}
 			add_control (create {WSF_BASIC_CONTROL}.make_with_body ("h4", "", "Reward"))
 			create form.make_with_label_width (3)
 			create title_container.make ("Title", create {WSF_INPUT_CONTROL}.make (""))
-			title_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent check_name, "Enter a valid title (between 3 and 50 characters)"))
+			title_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent check_name, "Enter a valid title (between 3 and 50 characters)"))
 			form.add_control (title_container)
 
 			create description_container.make ("Description", create {WSF_TEXTAREA_CONTROL}.make (""))
@@ -51,7 +51,7 @@ feature {NONE}
 		end
 feature -- Validations
 
-	check_name (input: STRING): BOOLEAN
+	check_name (input: STRING_32): BOOLEAN
 		do
 			Result := input.count >= 3 and input.count <= 50
 		end
@@ -67,8 +67,8 @@ feature {NONE}
 	parent: REWARD_INPUT_REPEATER
 	form: WSF_FORM_CONTROL
 
-	title_container: WSF_FORM_ELEMENT_CONTROL [STRING]
-	description_container: WSF_FORM_ELEMENT_CONTROL [STRING]
-	price_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+	title_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
+	description_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
+	price_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
 end

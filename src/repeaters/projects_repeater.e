@@ -16,7 +16,7 @@ create
 
 feature
 
-	render_item (item: SQL_ENTITY): STRING
+	render_item (item: SQL_ENTITY): STRING_32
 		local
 			body: STRING
 			intro: STRING

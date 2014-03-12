@@ -16,7 +16,7 @@ create
 
 feature
 
-	create_control_from_tag (tag: STRING): detachable IMAGE_INPUT
+	create_control_from_tag (tag: STRING_32): detachable IMAGE_INPUT
 		do
 			if tag.same_string ("image") then
 				create Result.make (Current)

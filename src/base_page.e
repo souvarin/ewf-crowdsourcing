@@ -41,7 +41,7 @@ feature {NONE}
 			if not attached get_parameter ("ajax") then
 				control.add_control (navbar)
 			end
-			create main_control.make ("main_control")
+			create main_control.make
 			control.add_control (main_control)
 		end
 
@@ -67,8 +67,8 @@ feature {NONE}
 			button: WSF_BUTTON_CONTROL
 			username: WSF_INPUT_CONTROL
 			password: WSF_PASSWORD_CONTROL
-			a_username_container: WSF_FORM_ELEMENT_CONTROL [STRING]
-			a_password_container: WSF_FORM_ELEMENT_CONTROL [STRING]
+			a_username_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
+			a_password_container: WSF_FORM_ELEMENT_CONTROL [STRING_32]
 			a_login_form: detachable WSF_FORM_CONTROL
 		do
 				-- create login form elements
@@ -77,10 +77,10 @@ feature {NONE}
 			create password.make ("")
 			password.append_attribute ("placeholder=%"password%"")
 			create a_username_container.make (Void, username)
-			a_username_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent validate_username, "Username does not exist!"))
+			a_username_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent validate_username, "Username does not exist!"))
 			username_container := a_username_container
 			create a_password_container.make (Void, password)
-			a_password_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING]}.make (agent validate_password, "Wrong password!"))
+			a_password_container.add_validator (create {WSF_AGENT_VALIDATOR [STRING_32]}.make (agent validate_password, "Wrong password!"))
 			password_container := a_password_container
 				-- create login form
 			create a_login_form.make
@@ -120,7 +120,7 @@ feature -- Event
 
 feature {NONE} -- Validations
 
-	validate_username (n: STRING): BOOLEAN
+	validate_username (n: STRING_32): BOOLEAN
 		local
 			users_query: SQL_QUERY [SQL_ENTITY]
 			condition: SQL_CONDITIONS
@@ -133,7 +133,7 @@ feature {NONE} -- Validations
 			Result := users_query.count_total (database) = 1
 		end
 
-	validate_password (p: STRING): BOOLEAN
+	validate_password (p: STRING_32): BOOLEAN
 		local
 			users_query: SQL_QUERY [SQL_ENTITY]
 			condition: SQL_CONDITIONS
@@ -210,9 +210,9 @@ feature -- Properties
 
 feature {NONE} --Local controls
 
-	username_container: detachable WSF_FORM_ELEMENT_CONTROL [STRING]
+	username_container: detachable WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
-	password_container: detachable WSF_FORM_ELEMENT_CONTROL [STRING]
+	password_container: detachable WSF_FORM_ELEMENT_CONTROL [STRING_32]
 
 	login_form: detachable WSF_FORM_CONTROL
 
